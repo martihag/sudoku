@@ -23,7 +23,8 @@ public class SudokuActivity extends ActionBarActivity {
     private int positionInFocus = -1;
     private static SudokuCell[] content;
 
-    private String seedPuzzle = "978312645"
+    private String seedPuzzle =
+              "978312645"
             + "312645978"
             + "645978312"
             + "789123456"
@@ -161,8 +162,9 @@ public class SudokuActivity extends ActionBarActivity {
 
     public void checkSolution(View v) {
         boolean solved = true;
+
         for (int i = 0; i < BOARD_SIZE; i++) {
-            if (!traverseHorizontal(i) || !traverseVertical(i)) {
+            if (!traverseHorizontal(i) || !traverseVertical(i) || !traverseSquareGroups(i)) {
                 solved = false;
                 break;
             }
@@ -197,5 +199,25 @@ public class SudokuActivity extends ActionBarActivity {
             vElements.add(content[i]);
         }
         return !(vElements.contains(new SudokuCell(0, false)) || vElements.size() != BOARD_SIZE);
+    }
+
+    private boolean traverseSquareGroups(int group) {
+        Set<SudokuCell> gElements = new HashSet<>();
+        int groupIndex = ((((9*group)/(27))*27)+((group%3)*3));
+        //System.out.println(groupIndex);
+
+        gElements.add(content[groupIndex]);
+        gElements.add(content[groupIndex+1]);
+        gElements.add(content[groupIndex+2]);
+
+        gElements.add(content[(groupIndex)+BOARD_SIZE]);
+        gElements.add(content[(groupIndex)+BOARD_SIZE+1]);
+        gElements.add(content[(groupIndex)+BOARD_SIZE+2]);
+
+        gElements.add(content[(groupIndex)+(BOARD_SIZE*2)]);
+        gElements.add(content[(groupIndex)+(BOARD_SIZE*2)+1]);
+        gElements.add(content[(groupIndex)+(BOARD_SIZE*2)+2]);
+
+        return !(gElements.contains(new SudokuCell(0, false)) || gElements.size() != BOARD_SIZE);
     }
 }
