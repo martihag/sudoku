@@ -160,6 +160,14 @@ public class SudokuActivity extends ActionBarActivity {
         setValueInSelectedView(0);
     }
 
+    public void markValue(View v) {
+        if (positionInFocus != -1) {
+            boolean isMarked = content[positionInFocus].isHighlighted();
+            content[positionInFocus].setHighlighted(!isMarked);
+            ((ArrayAdapter) gameBoard.getAdapter()).notifyDataSetChanged();
+        }
+    }
+
     public void checkSolution(View v) {
         boolean solved = true;
 
@@ -179,12 +187,7 @@ public class SudokuActivity extends ActionBarActivity {
     }
 
     private boolean traverseHorizontal(int line) {
-        int startPoint;
-        if (line == 0) {
-            startPoint = 0;
-        } else {
-            startPoint= line*BOARD_SIZE;
-        }
+        int startPoint = line*BOARD_SIZE;
         int endPoint = startPoint+(BOARD_SIZE);
         Set<SudokuCell> hElements = new HashSet<>();
         hElements.addAll(Arrays.asList(content).subList(startPoint, endPoint));
@@ -204,7 +207,6 @@ public class SudokuActivity extends ActionBarActivity {
     private boolean traverseSquareGroups(int group) {
         Set<SudokuCell> gElements = new HashSet<>();
         int groupIndex = ((((9*group)/(27))*27)+((group%3)*3));
-        //System.out.println(groupIndex);
 
         gElements.add(content[groupIndex]);
         gElements.add(content[groupIndex+1]);

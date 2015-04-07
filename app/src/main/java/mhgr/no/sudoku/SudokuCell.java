@@ -6,10 +6,12 @@ package mhgr.no.sudoku;
 public class SudokuCell {
     private int value;
     private boolean isInitialValue;
+    private boolean isHighlighted;
 
     public SudokuCell(int val, boolean isInitial) {
         this.value = val;
         this.isInitialValue = isInitial;
+        this.isHighlighted = false;
     }
 
     public int getValue() {
@@ -22,6 +24,14 @@ public class SudokuCell {
 
     public boolean isInitialValue() {
         return isInitialValue;
+    }
+
+    public boolean isHighlighted() {
+        return isHighlighted;
+    }
+
+    public void setHighlighted(boolean isHighlighted) {
+        this.isHighlighted = isHighlighted;
     }
 
     @Override

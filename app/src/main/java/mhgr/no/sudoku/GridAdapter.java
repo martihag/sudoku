@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 /**
  * Created by mh on 22.03.15.
@@ -30,6 +31,12 @@ public class GridAdapter extends ArrayAdapter<SudokuCell> {
 
         if (this.getItem(position).isInitialValue()) {
                 view.setBackgroundColor(Color.LTGRAY);
+        }
+
+        if (this.getItem(position).isHighlighted()) {
+            ((TextView) view).setTextColor(Color.RED);
+        } else {
+            ((TextView) view).setTextColor(Color.BLACK);
         }
 
         return view;

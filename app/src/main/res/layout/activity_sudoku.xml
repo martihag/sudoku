@@ -136,4 +136,14 @@
         android:layout_toEndOf="@+id/relativeLayout"
         android:onClick="checkSolution" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mark"
+        android:id="@+id/buttonMark"
+        android:onClick="markValue"
+        android:layout_above="@+id/buttonCheckBoard"
+        android:layout_toRightOf="@+id/relativeLayout"
+        android:layout_toEndOf="@+id/relativeLayout" />
+
 </RelativeLayout>
