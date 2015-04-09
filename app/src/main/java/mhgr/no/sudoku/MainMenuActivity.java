@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,24 +46,56 @@ public class MainMenuActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void startNewGame(View v) {
+    public void startNewGameSimple(View v) {
+        startNewGame("simple");
+    }
+
+    public void startNewGameMedium(View v) {
+        startNewGame("medium");
+    }
+
+    public void startNewGameHard(View v) {
+        startNewGame("hard");
+    }
+
+    public void startNewGame(String difficulty) {
         //Intent i = new Intent(this, SudokuActivity.class);
         //startActivity(i);
         db = new DBAdapter(this);
         db.open();
-        Cursor c = db.getAllSimple();
-        String[] columns = new String[]{c.getColumnName(0),c.getColumnName(1),c.getColumnName(2)};
-        db.close();
+        Cursor c;
+        switch (difficulty) {
+            case("simple"):
+                c = db.getAllSimple();
+                break;
+            case("medium"):
+                c = db.getAllMedium();
+                break;
+            case("hard"):
+                c = db.getAllHard();
+                break;
+            default:
+                c = db.getAllSimple();
+        }
+        //String[] columns = new String[]{c.getColumnName(0),c.getColumnName(1),c.getColumnName(2)};
+
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(
                 MainMenuActivity.this);
         builderSingle.setIcon(R.drawable.ic_launcher);
-        builderSingle.setTitle("Select One Name:-");
+        builderSingle.setTitle("Select a board to solve");
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 MainMenuActivity.this,
                 android.R.layout.select_dialog_singlechoice);
-        for (String col : columns) {
-            arrayAdapter.add(col);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            //Log.d("ONCREATE", String.valueOf(c.getInt(c.getColumnIndex("name"))));
+            //Log.d("ONCREATE", c.getString(c.getColumnIndex("name")));
+            arrayAdapter.add(c.getString(c.getColumnIndex("name")));
+            c.moveToNext();
         }
+        //for (String col : columns) {
+            //arrayAdapter.add(col);
+        //}
         builderSingle.setNegativeButton("cancel",
                 new DialogInterface.OnClickListener() {
 
@@ -96,5 +129,6 @@ public class MainMenuActivity extends ActionBarActivity {
                     }
                 });
         builderSingle.show();
+        db.close();
     }
 }

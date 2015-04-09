@@ -8,25 +8,36 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_continue"
-        android:id="@+id/buttonContinue"
+        android:text="@string/menu_simple"
+        android:id="@+id/buttonSimple"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="startNewGameSimple" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_new_game"
-        android:id="@+id/newGameButton"
-        android:layout_below="@+id/buttonContinue"
+        android:text="@string/menu_medium"
+        android:id="@+id/menuMedium"
+        android:layout_below="@+id/buttonSimple"
         android:layout_centerHorizontal="true"
-        android:onClick="startNewGame" />
+        android:onClick="startNewGameMedium" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/settings"
         android:id="@+id/buttonSettings"
-        android:layout_below="@+id/newGameButton"
+        android:layout_below="@+id/buttonHard"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/menu_hard"
+        android:id="@+id/buttonHard"
+        android:onClick="startNewGameHard"
+        android:layout_below="@+id/menuMedium"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

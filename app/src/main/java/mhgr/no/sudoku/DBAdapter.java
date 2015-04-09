@@ -21,7 +21,7 @@ public class DBAdapter {
     static final String DATABASE_TABLE2 = "medium";
     static final String DATABASE_TABLE3 = "hard";
     static final int DATABASE_VERSION = 1;
-    static final String DATABASE_CREATE1 = "create table " + DATABASE_TABLE1 + "(" + KEY_ROWID + " integer primary key autoincrement, "
+    static final String DATABASE_CREATE1 = "create table " + DATABASE_TABLE1 + "(" + KEY_ROWID + " integer primary key, "
             + KEY_NAME + " text unique not null, " +
             KEY_BOARD_DATA + " text not null);";
     static final String DATABASE_CREATE2 = "create table " + DATABASE_TABLE2 + "(" + KEY_ROWID + " integer primary key autoincrement, "
@@ -30,8 +30,9 @@ public class DBAdapter {
     static final String DATABASE_CREATE3 = "create table " + DATABASE_TABLE3 + "(" + KEY_ROWID + " integer primary key autoincrement, "
             + KEY_NAME + " text unique not null, " +
             KEY_BOARD_DATA + " text not null);";
-    static final String DATABASE_INSERT1 = "insert into " + DATABASE_TABLE1 + " values('default', 'Simple 1', " +
-            "'080020673307105200024073010602010408108006052700842090410208007050760900076400581')";
+    static final String DATABASE_INSERT1 = "insert into simple (name, sudoku_board) VALUES ('Simple 1', '080020673307105200024073010602010408108006052700842090410208007050760900076400581');";
+    static final String DATABASE_INSERT2 = "insert into medium (name, sudoku_board) VALUES ('Medium 1', '000100300504030000000200098740980230100020004062045019250007000000090105009002000');";
+    static final String DATABASE_INSERT3 = "insert into hard (name, sudoku_board) VALUES ('Hard 1', '000000025003900004010560900070600540000000000032005060006078090800001200240000000');";
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -53,6 +54,8 @@ public class DBAdapter {
                 db.execSQL(DATABASE_CREATE2);
                 db.execSQL(DATABASE_CREATE3);
                 db.execSQL(DATABASE_INSERT1);
+                db.execSQL(DATABASE_INSERT2);
+                db.execSQL(DATABASE_INSERT3);
             }
             catch (SQLException e) {
                 e.printStackTrace();
