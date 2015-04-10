@@ -45,10 +45,13 @@ public class SudokuActivity extends ActionBarActivity {
             + "050760900"
             + "076400581";
 
+    private String board = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
+        board = getIntent().getStringExtra("sudoku_board");
         genContent();
         gameBoard = (GridView) findViewById(R.id.sudokuGrid);
 
@@ -76,7 +79,7 @@ public class SudokuActivity extends ActionBarActivity {
  /*       for (int i = 0; i < content.length; i++ ) {
             content[i] = (i % 9)+1 + "";
         }*/
-        content = fromPuzzleString(startBoardSimple);
+        content = fromPuzzleString(board);
     }
 
     /** Convert a puzzle string into an array */

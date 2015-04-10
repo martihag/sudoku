@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import java.util.List;
+
 
 public class MainMenuActivity extends ActionBarActivity {
 
@@ -63,39 +65,31 @@ public class MainMenuActivity extends ActionBarActivity {
         //startActivity(i);
         db = new DBAdapter(this);
         db.open();
-        Cursor c;
+        List<SudokuBoard> boards = null;
         switch (difficulty) {
             case("simple"):
-                c = db.getAllSimple();
+                boards = db.getAllSimple();
                 break;
             case("medium"):
-                c = db.getAllMedium();
+                boards = db.getAllMedium();
                 break;
             case("hard"):
-                c = db.getAllHard();
+                boards = db.getAllHard();
                 break;
             default:
-                c = db.getAllSimple();
+                boards = db.getAllSimple();
+                break;
         }
-        //String[] columns = new String[]{c.getColumnName(0),c.getColumnName(1),c.getColumnName(2)};
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(
                 MainMenuActivity.this);
         builderSingle.setIcon(R.drawable.ic_launcher);
         builderSingle.setTitle("Select a board to solve");
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        final ArrayAdapter<SudokuBoard> arrayAdapter = new ArrayAdapter<SudokuBoard>(
                 MainMenuActivity.this,
-                android.R.layout.select_dialog_singlechoice);
-        c.moveToFirst();
-        while (!c.isAfterLast()) {
-            //Log.d("ONCREATE", String.valueOf(c.getInt(c.getColumnIndex("name"))));
-            //Log.d("ONCREATE", c.getString(c.getColumnIndex("name")));
-            arrayAdapter.add(c.getString(c.getColumnIndex("name")));
-            c.moveToNext();
-        }
-        //for (String col : columns) {
-            //arrayAdapter.add(col);
-        //}
+                android.R.layout.select_dialog_singlechoice,
+                boards);
+
         builderSingle.setNegativeButton("cancel",
                 new DialogInterface.OnClickListener() {
 
@@ -110,7 +104,11 @@ public class MainMenuActivity extends ActionBarActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String strName = arrayAdapter.getItem(which);
+                        Intent i = new Intent(MainMenuActivity.this, SudokuActivity.class);
+                        i.putExtra("sudoku_board", arrayAdapter.getItem(which).getSudoku_board());
+                        startActivity(i);
+                        /*
+                        String strName = arrayAdapter.getItem(which).getName();
                         AlertDialog.Builder builderInner = new AlertDialog.Builder(
                                 MainMenuActivity.this);
                         builderInner.setMessage(strName);
@@ -126,6 +124,7 @@ public class MainMenuActivity extends ActionBarActivity {
                                     }
                                 });
                         builderInner.show();
+                        */
                     }
                 });
         builderSingle.show();

@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mh on 03.04.15.
  */
@@ -102,13 +105,48 @@ public class DBAdapter {
         return db.insert(DATABASE_TABLE3,  null, initialValues);
     }
 
-    public Cursor getAllSimple() {
-        return db.query(DATABASE_TABLE1, new String[]{KEY_ROWID, KEY_NAME, KEY_BOARD_DATA}, null, null, null, null, null, null);
+    public List<SudokuBoard> getAllSimple() {
+        List<SudokuBoard> boardsList = new ArrayList<SudokuBoard>();
+        Cursor c = db.query(DATABASE_TABLE1, new String[]{KEY_ROWID, KEY_NAME, KEY_BOARD_DATA}, null, null, null, null, null, null);
+        if (c.moveToFirst()) {
+            do {
+                SudokuBoard board = new SudokuBoard();
+                board.set_id(Integer.parseInt(c.getString(0)));
+                board.setName(c.getString(1));
+                board.setSudoku_board(c.getString(2));
+                boardsList.add(board);
+            } while (c.moveToNext());
+        }
+        return boardsList;
     }
-    public Cursor getAllMedium() {
-        return db.query(DATABASE_TABLE2, new String[]{KEY_ROWID, KEY_NAME, KEY_BOARD_DATA}, null, null, null, null, null, null);
+
+    public List<SudokuBoard> getAllMedium() {
+        List<SudokuBoard> boardsList = new ArrayList<SudokuBoard>();
+        Cursor c = db.query(DATABASE_TABLE2, new String[]{KEY_ROWID, KEY_NAME, KEY_BOARD_DATA}, null, null, null, null, null, null);
+        if (c.moveToFirst()) {
+            do {
+                SudokuBoard board = new SudokuBoard();
+                board.set_id(Integer.parseInt(c.getString(0)));
+                board.setName(c.getString(1));
+                board.setSudoku_board(c.getString(2));
+                boardsList.add(board);
+            } while (c.moveToNext());
+        }
+        return boardsList;
     }
-    public Cursor getAllHard() {
-        return db.query(DATABASE_TABLE3, new String[]{KEY_ROWID, KEY_NAME, KEY_BOARD_DATA}, null, null, null, null, null, null);
+
+    public List<SudokuBoard> getAllHard() {
+        List<SudokuBoard> boardsList = new ArrayList<SudokuBoard>();
+        Cursor c = db.query(DATABASE_TABLE3, new String[]{KEY_ROWID, KEY_NAME, KEY_BOARD_DATA}, null, null, null, null, null, null);
+        if (c.moveToFirst()) {
+            do {
+                SudokuBoard board = new SudokuBoard();
+                board.set_id(Integer.parseInt(c.getString(0)));
+                board.setName(c.getString(1));
+                board.setSudoku_board(c.getString(2));
+                boardsList.add(board);
+            } while (c.moveToNext());
+        }
+        return boardsList;
     }
 }
