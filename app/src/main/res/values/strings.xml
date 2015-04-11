@@ -4,10 +4,20 @@
     <string name="app_name">Sudoku</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_save">Save</string>
     <string name="menu_medium">New Game Medium</string>
     <string name="settings">Settings</string>
     <string name="menu_simple">New Game Simple</string>
     <string name="menu_hard">New Game Hard</string>
+    <string name="menu_new">Empty Board</string>
     <string name="title_activity_sudoku">SudokuActivity</string>
+    <string name="save_name">Name</string>
+    <string name="save_difficulty">Difficulty</string>
+
+    <string-array name="categories">
+        <item>simple</item>
+        <item>medium</item>
+        <item>hard</item>
+    </string-array>
 
 </resources>

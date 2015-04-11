@@ -1,13 +1,20 @@
 package mhgr.no.sudoku;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,28 +29,7 @@ public class SudokuActivity extends ActionBarActivity {
     private TextView viewInFocus;
     private int positionInFocus = -1;
     private static SudokuCell[] content;
-
-    private String seedPuzzle =
-              "978312645"
-            + "312645978"
-            + "645978312"
-            + "789123456"
-            + "123456789"
-            + "456789123"
-            + "897231564"
-            + "231564897"
-            + "564897231";
-
-    private String startBoardSimple =
-              "080020673"
-            + "307105200"
-            + "024073010"
-            + "602010408"
-            + "108006052"
-            + "700842090"
-            + "410208007"
-            + "050760900"
-            + "076400581";
+    private DBAdapter db;
 
     private String board = null;
 
@@ -76,9 +62,6 @@ public class SudokuActivity extends ActionBarActivity {
     }
 
     private void genContent() {
- /*       for (int i = 0; i < content.length; i++ ) {
-            content[i] = (i % 9)+1 + "";
-        }*/
         content = fromPuzzleString(board);
     }
 
@@ -98,6 +81,14 @@ public class SudokuActivity extends ActionBarActivity {
         return puz;
     }
 
+    private String toPuzzleString() {
+        StringBuilder buf = new StringBuilder();
+        for (SudokuCell cell : content) {
+            buf.append(cell.getValue());
+        }
+        return buf.toString();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -110,11 +101,12 @@ public class SudokuActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch  (item.getItemId()) {
+            case R.id.action_save:
+                openSaveDialog();
+                return true;
+            case R.id.action_settings:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -205,6 +197,49 @@ public class SudokuActivity extends ActionBarActivity {
             vElements.add(content[i]);
         }
         return !(vElements.contains(new SudokuCell(0, false)) || vElements.size() != BOARD_SIZE);
+    }
+
+    private void openSaveDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Save Board");
+
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        final View v = inflater.inflate(R.layout.save_view, null);
+
+        dialog.setView(v);
+
+        dialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String nameText = ((EditText)v.findViewById(R.id.editText)).getText().toString();
+                String category = ((Spinner)v.findViewById(R.id.spinner)).getSelectedItem().toString();
+                if (!nameText.isEmpty() || !category.isEmpty()) {
+                    db = new DBAdapter(SudokuActivity.this);
+                    db.open();
+                    db.insert(category, nameText, toPuzzleString());
+                    db.close();
+                }
+
+                //Log.d("SAVE!", nameText + " " + category);
+            }
+        });
+
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d("save!", "CANCEL!");
+            }
+        });
+
+        dialog.show();
+
+        Spinner spinner = (Spinner)v.findViewById(R.id.spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(adapter);
     }
 
     private boolean traverseSquareGroups(int group) {

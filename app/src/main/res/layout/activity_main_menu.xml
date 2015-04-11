@@ -28,9 +28,9 @@
         android:layout_height="wrap_content"
         android:text="@string/settings"
         android:id="@+id/buttonSettings"
-        android:layout_below="@+id/buttonHard"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/buttonNewBoard"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="fill_parent"
@@ -39,5 +39,14 @@
         android:id="@+id/buttonHard"
         android:onClick="startNewGameHard"
         android:layout_below="@+id/menuMedium"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/menu_new"
+        android:id="@+id/buttonNewBoard"
+        android:onClick="startEmpty"
+        android:layout_below="@+id/buttonHard"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

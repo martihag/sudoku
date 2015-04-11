@@ -60,9 +60,13 @@ public class MainMenuActivity extends ActionBarActivity {
         startNewGame("hard");
     }
 
+    public void startEmpty(View v) {
+        Intent i = new Intent(MainMenuActivity.this, SudokuActivity.class);
+        i.putExtra("sudoku_board", "000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        startActivity(i);
+    }
+
     public void startNewGame(String difficulty) {
-        //Intent i = new Intent(this, SudokuActivity.class);
-        //startActivity(i);
         db = new DBAdapter(this);
         db.open();
         List<SudokuBoard> boards = null;
@@ -85,7 +89,7 @@ public class MainMenuActivity extends ActionBarActivity {
                 MainMenuActivity.this);
         builderSingle.setIcon(R.drawable.ic_launcher);
         builderSingle.setTitle("Select a board to solve");
-        final ArrayAdapter<SudokuBoard> arrayAdapter = new ArrayAdapter<SudokuBoard>(
+        final ArrayAdapter<SudokuBoard> arrayAdapter = new ArrayAdapter<>(
                 MainMenuActivity.this,
                 android.R.layout.select_dialog_singlechoice,
                 boards);

@@ -105,6 +105,22 @@ public class DBAdapter {
         return db.insert(DATABASE_TABLE3,  null, initialValues);
     }
 
+    public long insert(String difficulty, String name, String sudoku_board) {
+        switch (difficulty) {
+            case "simple":
+                return insertSimpleBoard(name, sudoku_board);
+
+            case "medium":
+                return insertMediumBoard(name, sudoku_board);
+
+            case "hard":
+                return insertHardBoard(name, sudoku_board);
+
+            default:
+                return Long.parseLong(null);
+        }
+    }
+
     public List<SudokuBoard> getAllSimple() {
         List<SudokuBoard> boardsList = new ArrayList<SudokuBoard>();
         Cursor c = db.query(DATABASE_TABLE1, new String[]{KEY_ROWID, KEY_NAME, KEY_BOARD_DATA}, null, null, null, null, null, null);

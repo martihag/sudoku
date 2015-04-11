@@ -32,7 +32,6 @@ public class GridAdapter extends ArrayAdapter<SudokuCell> {
         if (this.getItem(position).isInitialValue()) {
                 view.setBackgroundColor(Color.LTGRAY);
         }
-
         if (this.getItem(position).isHighlighted()) {
             ((TextView) view).setTextColor(Color.RED);
         } else {
