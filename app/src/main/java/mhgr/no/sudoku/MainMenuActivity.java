@@ -3,9 +3,12 @@ package mhgr.no.sudoku;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainMenuActivity extends ActionBarActivity {
@@ -39,13 +43,27 @@ public class MainMenuActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case (R.id.action_no):
+                setLocale("no");
+                return true;
+            case (R.id.action_en):
+                setLocale("en");
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration config = res.getConfiguration();
+        config.locale = myLocale;
+        res.updateConfiguration(config, dm);
+        Intent refresh = new Intent(this, MainMenuActivity.class);
+        startActivity(refresh);
     }
 
     public void startNewGameSimple(View v) {
@@ -88,7 +106,7 @@ public class MainMenuActivity extends ActionBarActivity {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(
                 MainMenuActivity.this);
         builderSingle.setIcon(R.drawable.ic_launcher);
-        builderSingle.setTitle("Select a board to solve");
+        builderSingle.setTitle(getString(R.string.select_board));
         final ArrayAdapter<SudokuBoard> arrayAdapter = new ArrayAdapter<>(
                 MainMenuActivity.this,
                 android.R.layout.select_dialog_singlechoice,
@@ -111,24 +129,6 @@ public class MainMenuActivity extends ActionBarActivity {
                         Intent i = new Intent(MainMenuActivity.this, SudokuActivity.class);
                         i.putExtra("sudoku_board", arrayAdapter.getItem(which).getSudoku_board());
                         startActivity(i);
-                        /*
-                        String strName = arrayAdapter.getItem(which).getName();
-                        AlertDialog.Builder builderInner = new AlertDialog.Builder(
-                                MainMenuActivity.this);
-                        builderInner.setMessage(strName);
-                        builderInner.setTitle("Your Selected Item is");
-                        builderInner.setPositiveButton("Ok",
-                                new DialogInterface.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(
-                                            DialogInterface dialog,
-                                            int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        builderInner.show();
-                        */
                     }
                 });
         builderSingle.show();

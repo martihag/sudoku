@@ -26,15 +26,6 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings"
-        android:id="@+id/buttonSettings"
-        android:layout_below="@+id/buttonNewBoard"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:text="@string/menu_hard"
         android:id="@+id/buttonHard"
         android:onClick="startNewGameHard"

@@ -119,7 +119,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clear Field"
+        android:text="@string/clearField"
         android:id="@+id/buttonNullValue"
         android:layout_alignBottom="@+id/relativeLayout"
         android:layout_toRightOf="@+id/relativeLayout"
@@ -129,7 +129,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Solve"
+        android:text="@string/solveBoard"
         android:id="@+id/buttonCheckBoard"
         android:layout_above="@+id/buttonNullValue"
         android:layout_toRightOf="@+id/relativeLayout"
@@ -139,7 +139,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mark"
+        android:text="@string/markValue"
         android:id="@+id/buttonMark"
         android:onClick="markValue"
         android:layout_above="@+id/buttonCheckBoard"

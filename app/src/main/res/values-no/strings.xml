@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="action_save">Lagre</string>
+    <string name="action_settings">Innstillinger</string>
+    <string name="app_name">Sudoku</string>
+    <string name="clearField">Tøm felt</string>
+    <string name="hello_world">Hei verden!</string>
+    <string name="markValue">Markèr</string>
+    <string name="menu_hard">Nytt Spill Vanskelig</string>
+    <string name="menu_medium">Nytt Spill Medium</string>
+    <string name="menu_new">Tomt Brett</string>
+    <string name="menu_simple">Nytt Spill Enkelt</string>
+    <string name="save_difficulty">Vanskelighetsgrad</string>
+    <string name="save_name">Navn</string>
+    <string name="settings">Innstillinger</string>
+    <string name="solveBoard">Sjekk Løsning</string>
+    <string name="title_activity_sudoku">Sudoku</string>
+    <string name="locale_no">Norsk</string>
+    <string name="locale_en">Engelsk</string>
+    <string name="select_board">Velg et brett å løse</string>
+    <string name="save_board">Lagre brett</string>
+
+</resources>

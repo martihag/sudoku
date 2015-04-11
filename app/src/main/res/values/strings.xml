@@ -13,6 +13,13 @@
     <string name="title_activity_sudoku">SudokuActivity</string>
     <string name="save_name">Name</string>
     <string name="save_difficulty">Difficulty</string>
+    <string name="clearField">Clear Field</string>
+    <string name="solveBoard">Solve</string>
+    <string name="markValue">Mark</string>
+    <string name="locale_no">Norwegian</string>
+    <string name="locale_en">English</string>
+    <string name="select_board">Select a board to solve</string>
+    <string name="save_board">Save board</string>
 
     <string-array name="categories">
         <item>simple</item>

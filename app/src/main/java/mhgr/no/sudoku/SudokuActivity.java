@@ -48,14 +48,11 @@ public class SudokuActivity extends ActionBarActivity {
         gameBoard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               //Toast.makeText(getApplicationContext(), ((TextView) view).getText(),
-               //         Toast.LENGTH_SHORT).show();
                 if (viewInFocus != null) {
                     viewInFocus.setBackgroundColor(getResources().getColor(R.color.abc_background_cache_hint_selector_material_light));
                 }
                 viewInFocus = (TextView) view;
                 positionInFocus = position;
-                //((TextView) view).setText("A");
                 view.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
             }
         });
@@ -69,11 +66,9 @@ public class SudokuActivity extends ActionBarActivity {
     static protected SudokuCell[] fromPuzzleString(String string) {
         SudokuCell[] puz = new SudokuCell[string.length()];
         for (int i = 0; i < puz.length; i++) {
-            //String value = Character.toString(string.charAt(i));
             int value = string.charAt(i) - '0';
             boolean isInitial = true;
             if (value == 0) {
-                //value = "";
                 isInitial = false;
             }
             puz[i] = new SudokuCell(value, isInitial);
@@ -91,21 +86,15 @@ public class SudokuActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_sudoku, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch  (item.getItemId()) {
             case R.id.action_save:
                 openSaveDialog();
-                return true;
-            case R.id.action_settings:
                 return true;
         }
 
@@ -115,11 +104,6 @@ public class SudokuActivity extends ActionBarActivity {
     private void setValueInSelectedView(int value) {
         if (positionInFocus != -1) {
             content[positionInFocus].setValue(value);
-            /*if (value == 0) {
-                content[positionInFocus].setValue("");
-            } else {
-                content[positionInFocus].setValue(String.valueOf(value));
-            }*/
             ((ArrayAdapter) gameBoard.getAdapter()).notifyDataSetChanged();
         }
     }
@@ -201,7 +185,7 @@ public class SudokuActivity extends ActionBarActivity {
 
     private void openSaveDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Save Board");
+        dialog.setTitle(getString(R.string.save_board));
 
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -220,8 +204,6 @@ public class SudokuActivity extends ActionBarActivity {
                     db.insert(category, nameText, toPuzzleString());
                     db.close();
                 }
-
-                //Log.d("SAVE!", nameText + " " + category);
             }
         });
 
